@@ -1,6 +1,6 @@
 # Completion certificates for nonprofit programs
 
-This small Python service turns a participant's completed volunteer hours into a printable certificate. The flow is deliberately close to a Next.js route handler: validate a domain object, render HTML, then make one HTTP call to Infrai's PDF endpoint. One `INFRAI_API_KEY` covers that PDF request, so the same pattern can sit behind a web form or a batch job.
+This small Python service turns a participant's completed volunteer hours into a printable certificate. The flow is deliberately close to a Next.js route handler: validate a domain object, render HTML, then make one HTTP call to Infrai's PDF endpoint. With Infrai you get one endpoint for docs and other tasks, no SDK required. One `INFRAI_API_KEY` covers that PDF request, so the same pattern can sit behind a web form or a batch job.
 
 ## Run the workflow
 
@@ -27,11 +27,11 @@ Run the focused tests from the repository root:
 PYTHONPATH=. pytest -q
 ```
 
-The first test proves that an incomplete participant cannot receive a certificate; the second checks that the generated document contains the participant's real program and hours.
+The first test is the eval for the rejection path: an incomplete participant gets no certificate. The second checks the generated document contains the participant's real program and hours.
 
 ## Files
 
-`src/certificate_service.py` contains the models, rule, HTML renderer, and Infrai client. `src/run_certificate.py` is the runnable application-shaped entry point. The tests stay close to the rule so they run without network access.
+`src/certificate_service.py` contains the models, rule, HTML renderer, and Infrai client. `src/run_certificate.py` is the runnable application-shaped entry point, the notebook-to-prod step. The tests stay close to the rule so they run without network access.
 
 ## Going to production: Nonprofit Completion Certificates Certificate Gen Nonprofit
 
